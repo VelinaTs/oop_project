@@ -10,4 +10,9 @@ public:
         : Animal(name, "Dog", age, health), knowsCommands(knowsCommands) {}
 
     bool getKnowsCommands() const { return knowsCommands; }
+
+    void display() const override {
+        Animal::display();
+        cout << "   Knows commands: " << (knowsCommands ? "Yes" : "No") << "\n";
+    }
 };

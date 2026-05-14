@@ -10,4 +10,9 @@ public:
         : Animal(name, "Cat", age, health), friendlyWithOtherCats(friendlyWithOtherCats) {}
 
     bool getFriendlyWithOtherCats() const { return friendlyWithOtherCats; }
+
+    void display() const override {
+        Animal::display();
+        cout << "   Friendly with other cats: " << (friendlyWithOtherCats ? "Yes" : "No") << "\n";
+    }
 };
