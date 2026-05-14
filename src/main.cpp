@@ -26,26 +26,42 @@ int main() {
         cin.ignore();
 
         if (choice == 1) {
-            string name, health;
-            int age;
-            bool commands;
-            cout << "Name: ";          getline(cin, name);
-            cout << "Age (months): ";  cin >> age; cin.ignore();
-            cout << "Health (e.g. healthy, sick, recovering): "; getline(cin, health);
-            cout << "Knows commands (1=yes 0=no): "; cin >> commands; cin.ignore();
-            shelter.addAnimal(new Dog(name, age, health, commands));
-            cout << "Dog added.\n";
+            try {
+                string name, health;
+                int age;
+                bool commands;
+                cout << "Name: ";          getline(cin, name);
+                if (name.empty()) throw invalid_argument("Name cannot be empty.");
+                cout << "Age (months): ";  cin >> age; cin.ignore();
+                if (age < 0) throw invalid_argument("Age cannot be negative.");
+                cout << "Health (e.g. healthy, sick, recovering): "; getline(cin, health);
+                if (health.empty()) throw invalid_argument("Health field cannot be empty.");
+                cout << "Knows commands (1=yes 0=no): "; cin >> commands; cin.ignore();
+                shelter.addAnimal(new Dog(name, age, health, commands));
+                cout << "Dog added.\n";
+            } catch (invalid_argument& e) {
+                cout << "Error: " << e.what() << "\n";
+                cin.clear(); cin.ignore(1000, '\n');
+            }
         }
         else if (choice == 2) {
-            string name, health;
-            int age;
-            bool friendly;
-            cout << "Name: ";          getline(cin, name);
-            cout << "Age (months): ";  cin >> age; cin.ignore();
-            cout << "Health (e.g. healthy, sick, recovering): "; getline(cin, health);
-            cout << "Friendly with other cats (1=yes 0=no): "; cin >> friendly; cin.ignore();
-            shelter.addAnimal(new Cat(name, age, health, friendly));
-            cout << "Cat added.\n";
+            try {
+                string name, health;
+                int age;
+                bool friendly;
+                cout << "Name: ";          getline(cin, name);
+                if (name.empty()) throw invalid_argument("Name cannot be empty.");
+                cout << "Age (months): ";  cin >> age; cin.ignore();
+                if (age < 0) throw invalid_argument("Age cannot be negative.");
+                cout << "Health (e.g. healthy, sick, recovering): "; getline(cin, health);
+                if (health.empty()) throw invalid_argument("Health field cannot be empty.");
+                cout << "Friendly with other cats (1=yes 0=no): "; cin >> friendly; cin.ignore();
+                shelter.addAnimal(new Cat(name, age, health, friendly));
+                cout << "Cat added.\n";
+            } catch (invalid_argument& e) {
+                cout << "Error: " << e.what() << "\n";
+                cin.clear(); cin.ignore(1000, '\n');
+            }
         }
         else if (choice == 3) {
             shelter.displayAll();
