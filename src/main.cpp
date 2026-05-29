@@ -12,6 +12,8 @@ void showMenu() {
     cout << "5. Search by type\n";
     cout << "6. Search by age (under X months)\n";
     cout << "7. Set feeding schedule\n";
+    cout << "8. Add vaccination to medical record\n"; 
+    cout << "9. Add checkup date to medical record\n"; 
     cout << "0. Exit\n";
     cout << "Choice: ";
 }
@@ -89,6 +91,20 @@ int main() {
             cout << "Food type: ";    getline(cin, food);
             cout << "Feeding time (e.g. 08:00, 18:00): "; getline(cin, time);
             shelter.setFeedingSchedule(name, food, time);
+        }
+    
+        else if (choice == 8) {
+            string name, vaccine;
+            cout << "Animal name: ";   getline(cin, name);
+            cout << "Vaccination (e.g. Rabies, Parvovirus): ";   getline(cin, vaccine);
+            shelter.addVaccination(name, vaccine);
+        }
+        
+        else if (choice == 9) {
+            string name, date;
+            cout << "Animal name: ";          getline(cin, name);
+            cout << "Checkup date (e.g. 2024-03-15): "; getline(cin, date);
+            shelter.addCheckup(name, date);
         }
 
     } while (choice != 0);

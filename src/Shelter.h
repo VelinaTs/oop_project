@@ -87,5 +87,26 @@ public:
         if (!found) cout << "  None.\n";
     }
 
+    void addVaccination(string name, string vaccine) {
+        for (int i = 0; i < count; i++) {
+            if (animals[i]->getName() == name) {
+                animals[i]->getMedicalRecord().addVaccination(vaccine);
+                cout << "Vaccination added.\n";
+                return;
+            }
+        }
+        cout << "Animal not found.\n";
+    }
+
+    void addCheckup(string name, string date) {
+        for (int i = 0; i < count; i++) {
+            if (animals[i]->getName() == name) {
+                animals[i]->getMedicalRecord().addCheckup(date);
+                cout << "Checkup date added.\n";
+                return;
+            }
+        }
+        cout << "Animal not found.\n";
+    }
 
 };
