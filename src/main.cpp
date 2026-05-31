@@ -16,6 +16,9 @@ void showMenu() {
     cout << "9. Add checkup date to medical record\n"; 
     cout << "10. Generate resource/shopping list\n";
     cout << "11. Volunteer diary (add / show / remove)\n";
+    cout << "12. Save to file\n";
+    cout << "13. Load from file\n";
+    cout << "14. Print adoption description\n";
     cout << "0. Exit\n";
     cout << "Choice: ";
 }
@@ -133,6 +136,18 @@ int main() {
             } else {
                 cout << "Unknown sub-choice.\n";
             }
+        }
+
+        else if (choice == 12) {
+            shelter.saveToFile("shelter.dat");
+        }
+        else if (choice == 13) {
+            shelter.loadFromFile("shelter.dat");
+        }
+        else if (choice == 14) {
+            string name;
+            cout << "Animal name: "; getline(cin, name);
+            shelter.printDescription(name);
         }
 
     } while (choice != 0);
