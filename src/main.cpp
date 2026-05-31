@@ -14,6 +14,8 @@ void showMenu() {
     cout << "7. Set feeding schedule\n";
     cout << "8. Add vaccination to medical record\n"; 
     cout << "9. Add checkup date to medical record\n"; 
+    cout << "10. Generate resource/shopping list\n";
+    cout << "11. Volunteer diary (add / show / remove)\n";
     cout << "0. Exit\n";
     cout << "Choice: ";
 }
@@ -105,6 +107,32 @@ int main() {
             cout << "Animal name: ";          getline(cin, name);
             cout << "Checkup date (e.g. 2024-03-15): "; getline(cin, date);
             shelter.addCheckup(name, date);
+        }
+
+        else if (choice == 10) {
+            shelter.generateResourceList();
+        }
+        else if (choice == 11) {
+            cout << "  a. Add volunteer\n"
+                 << "  b. Show all volunteers\n"
+                 << "  c. Remove volunteer\n"
+                 << "Sub-choice: ";
+            char sub;
+            cin >> sub; cin.ignore();
+            if (sub == 'a') {
+                string vname, aname;
+                cout << "Volunteer name: "; getline(cin, vname);
+                cout << "Animal name: ";    getline(cin, aname);
+                shelter.addVolunteer(vname, aname);
+            } else if (sub == 'b') {
+                shelter.showVolunteers();
+            } else if (sub == 'c') {
+                string vname;
+                cout << "Volunteer name to remove: "; getline(cin, vname);
+                shelter.removeVolunteer(vname);
+            } else {
+                cout << "Unknown sub-choice.\n";
+            }
         }
 
     } while (choice != 0);
