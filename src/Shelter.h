@@ -4,15 +4,18 @@
 #include "Animal.h"
 #include "Dog.h"
 #include "Cat.h"
+#include "Volunteer.h"
 using namespace std;
 
 class Shelter {
 private:
     Animal* animals[100];
     int count;
+    Volunteer volunteers[100];
+    int volunteerCount;
 
 public:
-    Shelter() : count(0) {}
+    Shelter() : count(0), volunteerCount(0) {}
 
     ~Shelter() {
         for (int i = 0; i < count; i++)
@@ -107,6 +110,85 @@ public:
             }
         }
         cout << "Animal not found.\n";
+    }
+
+    void generateResourceList() const {
+        if (count == 0) {
+            cout << "No animals in shelter - nothing to buy.\n";
+            return;
+        }
+        cout << "--- Shopping List (" << count << " animals) ---\n";
+        cout << "FOOD:\n";
+        bool anyFood = false;
+        for (int i = 0; i < count; i++) {
+            string food = animals[i]->getFoodType();
+            string time = animals[i]->getFeedingTime();
+            if (food != "") {
+                cout << "  " << animals[i]->getName() << ": " << food
+                     << " (feeding time: " << time << ")\n";
+                anyFood = true;
+            }
+        }
+        if (!anyFood)
+            cout << "  (no feeding schedules set yet)\n";
+
+        cout << "MEDICINE / CHECKUPS:\n";
+        bool anyMed = false;
+        for (int i = 0; i < count; i++) {
+            const MedicalRecord& rec = animals[i]->getMedicalRecord();
+            if (rec.getCheckupCount() > 0) {
+                cout << "  " << animals[i]->getName() << " - next checkup: "
+                     << rec.getCheckupDate(rec.getCheckupCount() - 1) << "\n";
+                anyMed = true;
+            }
+        }
+        if (!anyMed)
+            cout << "  (no checkups scheduled yet)\n";
+    }
+
+    void addVolunteer(string volunteerName, string animalName) {
+        bool found = false;
+        for (int i = 0; i < count; i++) {
+            if (animals[i]->getName() == animalName) {
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            cout << "Animal '" << animalName << "' not found.\n";
+            return;
+        }
+        if (volunteerCount < 100) {
+            volunteers[volunteerCount++] = Volunteer(volunteerName, animalName);
+            cout << "Volunteer added.\n";
+        } else {
+            cout << "Volunteer list full.\n";
+        }
+    }
+
+    void showVolunteers() const {
+        if (volunteerCount == 0) {
+            cout << "No volunteers registered.\n";
+            return;
+        }
+        cout << "--- Volunteer Diary ---\n";
+        for (int i = 0; i < volunteerCount; i++) {
+            cout << "[" << i + 1 << "] ";
+            volunteers[i].display();
+        }
+    }
+
+    void removeVolunteer(string volunteerName) {
+        for (int i = 0; i < volunteerCount; i++) {
+            if (volunteers[i].getVolunteerName() == volunteerName) {
+                for (int j = i; j < volunteerCount - 1; j++)
+                    volunteers[j] = volunteers[j + 1];
+                volunteerCount--;
+                cout << "Volunteer removed.\n";
+                return;
+            }
+        }
+        cout << "Volunteer not found.\n";
     }
 
 };
