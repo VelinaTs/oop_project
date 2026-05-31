@@ -45,6 +45,26 @@ public:
     MedicalRecord& getMedicalRecord() { return medicalRecord; }
     const MedicalRecord& getMedicalRecord() const { return medicalRecord; }
 
+    virtual string generateDescription() const {
+        string desc = name + " is a " + to_string(age) + "-month-old " + type
+            + " looking for a loving home. ";
+        if (health == "healthy")
+            desc += "Currently in great health. ";
+        else
+            desc += "Health status: " + health + ". ";
+        if (foodType != "")
+            desc += "Eats " + foodType + " (fed at " + feedingTime + "). ";
+        if (medicalRecord.getVaccinationCount() > 0) {
+            desc += "Vaccinations: ";
+            for (int i = 0; i < medicalRecord.getVaccinationCount(); i++) {
+                desc += medicalRecord.getVaccination(i);
+                if (i < medicalRecord.getVaccinationCount() - 1) desc += ", ";
+            }
+            desc += ". ";
+        }
+        return desc;
+    }
+
     virtual void display() const {
         cout << "Name: " << name
              << " | Type: " << type
