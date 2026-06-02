@@ -198,19 +198,17 @@ public:
         if (!f) { cout << "Cannot open file for writing.\n"; return; }
         for (int i = 0; i < count; i++) {
             Animal* a = animals[i];
-            // Vaccines joined by comma
             string vaccines = "";
             for (int v = 0; v < a->getMedicalRecord().getVaccinationCount(); v++) {
                 if (v > 0) vaccines += ",";
                 vaccines += a->getMedicalRecord().getVaccination(v);
             }
-            // Checkups joined by comma
             string checkups = "";
             for (int c = 0; c < a->getMedicalRecord().getCheckupCount(); c++) {
                 if (c > 0) checkups += ",";
                 checkups += a->getMedicalRecord().getCheckupDate(c);
             }
-            // Extra field: type-specific bool
+
             string extra = "";
             if (a->getType() == "Dog")
                 extra = to_string(static_cast<Dog*>(a)->getKnowsCommands());
@@ -232,7 +230,6 @@ public:
     void loadFromFile(string filename) {
         ifstream f(filename);
         if (!f) { cout << "Cannot open file for reading.\n"; return; }
-        // Clear existing data
         for (int i = 0; i < count; i++) delete animals[i];
         count = 0;
         volunteerCount = 0;
@@ -240,7 +237,6 @@ public:
         string line;
         while (getline(f, line)) {
             if (line.empty()) continue;
-            // Split by '|'
             string parts[12];
             int partCount = 0;
             stringstream ss(line);
@@ -271,14 +267,12 @@ public:
                 a->setStatus(status);
                 if (!food.empty()) a->setFeedingSchedule(food, feedTime);
 
-                // Re-add vaccines
                 if (!vaccines.empty()) {
                     stringstream vs(vaccines);
                     string v;
                     while (getline(vs, v, ','))
                         a->getMedicalRecord().addVaccination(v);
                 }
-                // Re-add checkups
                 if (!checkups.empty()) {
                     stringstream cs(checkups);
                     string c;

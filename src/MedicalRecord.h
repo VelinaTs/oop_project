@@ -48,8 +48,6 @@ public:
         return "";
     }
 
-    // Prints all vaccinations and checkup dates.
-    // Called from Animal::display() so the full animal profile appears together.
     void display() const {
         if (vaccinationCount == 0)
             cout << "   Vaccinations: none\n";
